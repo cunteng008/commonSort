@@ -8,10 +8,11 @@ public class Sort {
 		//insertSort(array);
 	    //selectSort(array);
 		//shellSort(array);
-		heapSort(array);
+		//heapSort(array);
 		//mergeSort(array); 
 		//bubbleSort(array);
-		//quickSort(array);
+		// quickSort(array);
+		countingSort(array);
 		for(int e : array){
 			System.out.println(" "+e);
 		}
@@ -251,4 +252,49 @@ public class Sort {
 		quickSort(array,low,i-1);
 		quickSort(array,i+1,high);
 	}	
+	
+	//计数排序,只能排0到n范围的整数
+	public static void countingSort(int[] array){
+		int max = 0;
+		for(int e:array){
+			if(max<e){
+				max = e;
+			}
+		}
+		
+		int countingArray[] = new int[max+1];
+		
+		for(int i=0; i <countingArray.length;i++){  //initialize array
+			countingArray[i] = 0;
+		}
+		for(int i=0;i<array.length;i++){
+			countingArray[array[i]]++;   //counting 
+		}
+
+		for(int i=1;i<countingArray.length;i++){
+			countingArray[i] +=countingArray[i-1];
+		}
+
+		
+		int sortedArray[] = new int[array.length];
+		for(int i=sortedArray.length-1;i>=0;i--){
+			int e = array[i];
+			int index = countingArray[e];
+			sortedArray[index-1] = e;	
+			countingArray[e]--;
+		}
+//		
+//		
+//		array = sortedArray;
+		for(int i=0;i<array.length;i++){
+			array[i] = sortedArray[i];			
+		}
+//		array = sortedArray;  //数组赋值后，只能作用于本函数
+//		array = sortedArray.clone();  // 赋值后，只能作用于本函数
+//		for(int i=0;i<array.length;i++){
+//			System.out.println(array[i]);			
+//		}
+						
+		//return array;
+	}
 }
